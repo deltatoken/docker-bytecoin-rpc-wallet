@@ -35,6 +35,10 @@ RUN ./walletd --container-file=${envContainerFile} --container-password=${envCon
 	&& mkdir configs logs \
 	&& mv ./${envContainerFile} configs/
 
+# https://docs.docker.com/engine/admin/logging/view_container_logs/
+# Forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /root/.bytecoin/logs/walletd.log
+
 EXPOSE ${envBindPort}	
 	
 ENTRYPOINT ./walletd \
